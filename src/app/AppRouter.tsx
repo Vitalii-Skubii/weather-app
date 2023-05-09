@@ -6,12 +6,12 @@ export const AppRouter = () => {
   const routes = Object.values(routeConfig);
 
   return (
-    <BrowserRouter>
+   
       <Routes>
         {routes.map(({ element, path }) => (
           <Route key={path} path={path} element={element} />
         ))}
       </Routes>
-    </BrowserRouter>
+   
   );
 };
