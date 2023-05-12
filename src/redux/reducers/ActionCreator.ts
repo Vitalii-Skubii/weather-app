@@ -1,5 +1,5 @@
 import { AppDispatch } from '../store';
-import { fetchWeather } from '../../api/weatherApi';
+import { fetchForecast, fetchWeather } from '../../api/weatherApi';
 import { citiesWeatherActions } from './citiesWeatherSlice';
 
 export const fetchCitiesWeather = (citiesList: string[]) => async (dispatch: AppDispatch) => {
@@ -8,7 +8,7 @@ export const fetchCitiesWeather = (citiesList: string[]) => async (dispatch: App
     const promises = citiesList.map((city) => fetchWeather(city));
     const citiesWeather = await Promise.all(promises);
     const validCitiesWeather = citiesWeather.filter((city) => city !== null);
-    console.log('DISPATCH');
+
     dispatch(citiesWeatherActions.citiesWeatherSuccess(validCitiesWeather));
   } catch (err) {
     dispatch(citiesWeatherActions.citiesWeatherError);
@@ -22,5 +22,15 @@ export const updateCityWeather = (city: string) => async (dispatch: AppDispatch)
     dispatch(citiesWeatherActions.cityWeatherUpdateSuccess(response));
   } catch (error) {
     dispatch(citiesWeatherActions.cityWeatherUpdateError);
+  }
+};
+
+export const fetchCityForecast = (city: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(citiesWeatherActions.cityForecastFetching());
+    const response = await fetchForecast(city);
+    dispatch(citiesWeatherActions.cityForecastSuccess(response));
+  } catch (error) {
+    dispatch(citiesWeatherActions.cityForecastError);
   }
 };

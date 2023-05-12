@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { CitiesWeatherState, ICitiesWeather } from '../types/ICitiesWeather';
+import { CitiesWeatherState, ICitiesWeather, ICityForecast } from '../types/ICitiesWeather';
 import { LOCAL_STORAGE_CITIES } from '../../constants/cities';
 
-
-const initialState: CitiesWeatherState = {
+export const initialState: CitiesWeatherState = {
   citiesWeather: [],
+  cityForecast: [],
   isLoading: false,
   isUpdateLoading: false,
   updateName: '',
@@ -28,7 +28,7 @@ export const citiesWeatherSlice = createSlice({
       state.error = action.payload;
     },
     addCityWeather: (state, action: PayloadAction<ICitiesWeather>) => {
-      state.citiesWeather?.push(action.payload);
+      state.citiesWeather.push(action.payload);
     },
     removeCityWeather: (state, action: PayloadAction<string>) => {
       const filteredCities = state.citiesWeather?.filter((city) => city.name !== action.payload);
@@ -51,6 +51,18 @@ export const citiesWeatherSlice = createSlice({
     },
     cityWeatherUpdateError(state, action: PayloadAction<string>) {
       state.isUpdateLoading = false;
+      state.error = action.payload;
+    },
+    cityForecastFetching(state) {
+      state.isLoading = true;
+    },
+    cityForecastSuccess: (state, action: PayloadAction<ICityForecast[]>) => {
+      const slicedForecast = action.payload.slice(0, 8);
+      state.cityForecast = slicedForecast;
+      state.isLoading = false;
+    },
+    cityForecastError(state, action: PayloadAction<string>) {
+      state.isLoading = false;
       state.error = action.payload;
     },
   },

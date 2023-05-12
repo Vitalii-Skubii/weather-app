@@ -56,13 +56,11 @@ export const useMainPageState = () => {
   useEffect(() => {
     if (!localStorage.getItem(LOCAL_STORAGE_CITIES)) {
       localStorage.setItem(LOCAL_STORAGE_CITIES, JSON.stringify(CITIES));
-      console.log(localStorage.getItem(LOCAL_STORAGE_CITIES), 'LOCAL');
       dispatch(fetchCitiesWeather(CITIES));
     } else if (localStorage.getItem(LOCAL_STORAGE_CITIES)) {
       const citiesLocal = JSON.parse(localStorage.getItem(LOCAL_STORAGE_CITIES) || '[]');
       dispatch(fetchCitiesWeather(citiesLocal));
     }
-    console.log(1);
   }, [dispatch]);
 
   const setErrorDispatch = async () => {

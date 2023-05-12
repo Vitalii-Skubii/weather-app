@@ -16,7 +16,7 @@ export const CityDetailed = (props: ICityDetailed) => {
   } = props;
 
   return (
-    <Card sx={{ width: '100%' }}>
+    <Card sx={{ width: '100%', marginBottom: '30px' }}>
       <CardActionArea>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Box>

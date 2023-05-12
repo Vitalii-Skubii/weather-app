@@ -19,10 +19,7 @@ export const SearchLocation = (props: ISearchProps) => {
 
   const { error } = useAppSelector((state) => state.citiesWeatherReducer);
 
-  console.log(error, 'ERROR');
-
   const onClickGetLocation = () => {
-    console.log(value, 'VALUE');
     handleGetLocation(value);
   };
 
